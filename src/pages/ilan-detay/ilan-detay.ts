@@ -95,7 +95,7 @@ export class IlanDetayPage {
   ilanSahibiniAra() {
     if (this.ilan.ilaniVerenKullanici.telNoPaylasim) {
       var telNo = this.ilan.ilaniVerenKullanici.telNo;
-      CallNumber.callNumber("18001010101", true)
+      CallNumber.callNumber(telNo, true)
         .then(() => console.log('Aradı'))
         .catch(() => console.log('Arama İşleminde Hata'));
     } else {

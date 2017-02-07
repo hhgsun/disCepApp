@@ -44,7 +44,7 @@ export class ProfildetayPage {
   telAra() {
     if (this.kullanici.telNoPaylasim) {
       var telNo = this.kullanici.telNo;
-      CallNumber.callNumber("18001010101", true)
+      CallNumber.callNumber(telNo, true)
         .then(() => console.log('Aradı'))
         .catch(() => console.log('Arama İşleminde Hata'));
     } else {
