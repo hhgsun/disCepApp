@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { CallNumber } from 'ionic-native';
 
 import { AngularFire } from 'angularfire2';
 
@@ -19,9 +19,9 @@ export class IlanDetayPage {
   tabBarElement;
 
   public ilan: any;
-  public chats;
+  //public chats;
   public aktifUid = null;
-  public aktifKullaniciChatAcmisMi = false; //her kullanıcı 1 tane chat odası açabilir sonra ordan mesajlaşır
+  //public aktifKullaniciChatAcmisMi = false; //her kullanıcı 1 tane chat odası açabilir sonra ordan mesajlaşır
   public favorilereEkliMi = false;
 
   constructor(
@@ -33,7 +33,6 @@ export class IlanDetayPage {
     private angularFire: AngularFire,
     private sanitizer: DomSanitizer
   ) {
-
     this.tabBarElement = document.querySelector('.tabbar');
     this.tabBarElement.style.display = 'none';
 
@@ -53,6 +52,7 @@ export class IlanDetayPage {
 
   ionViewWillEnter() {
     // CHATS
+    /*
     let chatsList = this.angularFire.database.list(this.baseService.paths.lists + "/" + this.ilan.$key + "/chats")
       .map(_chats => {
         var list = [];
@@ -73,9 +73,10 @@ export class IlanDetayPage {
     chatsList.subscribe(_chats => {
       this.chats = _chats;
     })
+    */
     // FAVORİ KONTROL
     this.favoriKontrol();
-    this.yeniMesajGorulduKontrol()
+    //this.yeniMesajGorulduKontrol()
   }
 
   // TAB GİZLEME
@@ -89,6 +90,17 @@ export class IlanDetayPage {
     })
     profilDetayModal._cssClass = "profil-detay-modal";
     profilDetayModal.present();
+  }
+
+  ilanSahibiniAra() {
+    if (this.ilan.ilaniVerenKullanici.telNoPaylasim) {
+      var telNo = this.ilan.ilaniVerenKullanici.telNo;
+      CallNumber.callNumber("18001010101", true)
+        .then(() => console.log('Aradı'))
+        .catch(() => console.log('Arama İşleminde Hata'));
+    } else {
+      this.baseService.presentAlert("Kullanıcının Telefon No Kaydı Bulunmamaktadır", "E-Mail Adresi: "+ this.ilan.ilaniVerenKullanici.email);
+    }
   }
 
   ilanDuzenle() {
@@ -125,6 +137,7 @@ export class IlanDetayPage {
   }
 
   // CHAT İŞLEMLERİ
+  /*
   chatYolla() {
     let promptMesaj = this.alertCtrl.create({
       title: 'Mesaj Yazınız',
@@ -161,7 +174,9 @@ export class IlanDetayPage {
     });
     promptMesaj.present();
   }
+  */
 
+  /*
   mesajYolla(_chat) {
     let promptMesaj = this.alertCtrl.create({
       title: 'Mesaj Yazınız',
@@ -190,7 +205,9 @@ export class IlanDetayPage {
     });
     promptMesaj.present();
   }
+  */
 
+  /*
   bildirimYolla(chat, message) {
     if (chat.olusturanId == message.yollayanId) {
       console.log("İLAN SAHİBİNE BİLDİRİM GİTMELİ:uid: " + this.ilan.ilaniVerenKullaniciId)
@@ -216,6 +233,7 @@ export class IlanDetayPage {
         })
     }
   }
+  */
 
   // FAVORİ İŞLEMLERİ
   favoriKontrol() {
@@ -257,6 +275,7 @@ export class IlanDetayPage {
     }
   }
 
+  /*
   yeniMesajGorulduKontrol() {
     this.angularFire.database.list(this.baseService.paths.users + "/" + this.aktifUid + "/yeniMesajlar")
       .subscribe(messages => {
@@ -270,6 +289,7 @@ export class IlanDetayPage {
         });
       })
   }
+  */
 
   goImagesShow(allImages, selectIndex) {
     var obj = {
@@ -281,6 +301,5 @@ export class IlanDetayPage {
     });
     imagesShowModal.present();
   }
-
 
 }

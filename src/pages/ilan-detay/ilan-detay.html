@@ -60,7 +60,7 @@
 	</ion-list>
 
 	<!-- CHATS -->
-	<ion-list>
+	<!--ion-list>
 		<div *ngFor="let chat of chats">
 			<ion-item-group *ngIf="chat.olusturanId == aktifUid || ilan.ilaniVerenKullaniciId == aktifUid">
 				<ion-item-divider *ngIf="chat.yollayanKullanici" color="light" (click)="profilGoruntule(chat.yollayanKullanici)">
@@ -73,9 +73,9 @@
 				</ion-item-divider>
 				<div *ngIf="chat.messages">
 					<ion-item *ngFor="let message of chat.messages">
-						<!-- ilan sahibinden mesaj -->
+						<!- ilan sahibinden mesaj ->
 						<h2 *ngIf="ilan.ilaniVerenKullaniciId == message.yollayanId" class="mesaj-ilansahibi">{{message.mesaj}}</h2>
-						<!-- kullanıcıdan mesaj -->
+						<!- kullanıcıdan mesaj ->
 						<h2 *ngIf="ilan.ilaniVerenKullaniciId != message.yollayanId" class="mesaj-kullanici">{{message.mesaj}}</h2>
 					</ion-item>
 				</div>
@@ -84,10 +84,18 @@
 				</div>
 			</ion-item-group>
 		</div>
-	</ion-list>
-	<div padding *ngIf="aktifUid != ilan.ilaniVerenKullaniciId && aktifKullaniciChatAcmisMi == false">
+	</ion-list-->
+	<!--div padding *ngIf="aktifUid != ilan.ilaniVerenKullaniciId && aktifKullaniciChatAcmisMi == false">
 		<button ion-button block (click)="chatYolla()">MESAJ YAZ</button>
-	</div>
+	</div-->
 	<!-- //chats -->
+
+	<div padding *ngIf="aktifUid != ilan.ilaniVerenKullaniciId">
+		<button color="secondary" ion-button block medium icon-left (click)="ilanSahibiniAra()">
+			<ion-icon name="call"></ion-icon>
+			İLAN SAHİBİNİ ARA
+		</button>
+	</div>
+
 
 </ion-content>

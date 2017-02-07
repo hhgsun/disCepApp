@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
-declare var window: any;
+import { CallNumber } from 'ionic-native';
 
 import { AngularFire } from 'angularfire2';
 
@@ -42,20 +42,21 @@ export class ProfildetayPage {
   }
 
   telAra() {
-    /* 
-    CallNumber.callNumber("05344580930", true)
-      .then(() => console.log('Aradın !')).catch(() => console.log('Arayamadın !'));
-    */
-    var telNum = encodeURIComponent(this.kullanici.telNo);
-    window.location = "tel:" + telNum;
+    if (this.kullanici.telNoPaylasim) {
+      var telNo = this.kullanici.telNo;
+      CallNumber.callNumber("18001010101", true)
+        .then(() => console.log('Aradı'))
+        .catch(() => console.log('Arama İşleminde Hata'));
+    } else {
+      this.baseService.presentAlert("Kullanıcının Telefon No Kaydı Bulunmamaktadır", "E-Mail Adresi: " + this.kullanici.email);
+    }
   }
 
   ilanDetay(ilan) {
+    this.viewCtrl.dismiss().then();
     ilan["ilaniVerenKullanici"] = this.kullanici;
     this.navCtrl.push(IlanDetayPage, {
       item: ilan
-    }).then(() => {
-      this.viewCtrl.dismiss().then();
     })
   }
 

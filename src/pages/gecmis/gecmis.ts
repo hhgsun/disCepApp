@@ -11,9 +11,9 @@ import { IlanDetayPage } from '../ilan-detay/ilan-detay';
   templateUrl: 'gecmis.html'
 })
 export class GecmisPage {
-  public segment = 'messages';
-  public mesajAtilanIlanlar = [];
-  public yeniMesajOlanlar = [];
+  //public segment = 'messages';
+  //public mesajAtilanIlanlar = [];
+  //public yeniMesajOlanlar = [];
   public favoriIlanlar = [];
   public aktifUid = null;
 
@@ -27,11 +27,12 @@ export class GecmisPage {
   }
 
   ionViewWillEnter() {
-    this.yeniGelenMesajlar()
-    this.mesajlariYukle()
+    //this.yeniGelenMesajlar()
+    //this.mesajlariYukle()
     this.favorileriYukle()
   }
 
+  /*
   mesajlariYukle() {
     this.angularFire.database.list(this.baseService.paths.lists).map(_ilanlar => {
       var list = [];
@@ -56,6 +57,7 @@ export class GecmisPage {
       this.mesajAtilanIlanlar = _ilanList
     });
   }
+  */
 
   favorileriYukle() {
     this.angularFire.database.list(this.baseService.paths.users + "/" + this.aktifUid + "/favorilerim")
@@ -79,6 +81,7 @@ export class GecmisPage {
       })
   }
 
+  /*
   yeniGelenMesajlar() {
     // YENİ MESAJ SAYISI - AYNI İLANA AİT MESAJLARI TEK GÖSTERME
     this.angularFire.database.list(this.baseService.paths.users + "/" + this.aktifUid + "/yeniMesajlar")
@@ -104,6 +107,7 @@ export class GecmisPage {
         this.yeniMesajOlanlar = ilanlar
       })
   }
+  */
 
   ilanDetay(ilan) {
     this.navCtrl.push(IlanDetayPage, {
@@ -111,12 +115,14 @@ export class GecmisPage {
     })
   }
 
+  /*
   doInfiniteMessages(infiniteScroll) {
     this.toplamIlan = this.toplamIlan + this.toplamIlanArtis;
     setTimeout(() => {
       infiniteScroll.complete();
     }, 500);
   }
+  */
 
   /*
     compressionToMessageItem(index, mesajIlan) {
