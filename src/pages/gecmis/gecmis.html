@@ -1,0 +1,95 @@
+<ion-header>
+	<ion-navbar no-border-bottom>
+		<ion-title>Geçmişim</ion-title>
+	</ion-navbar>
+	<ion-toolbar no-border-top>
+		<ion-segment [(ngModel)]="segment" primary>
+			<ion-segment-button value="messages">Mesajlarım</ion-segment-button>
+			<ion-segment-button value="favs">Favorilerim</ion-segment-button>
+		</ion-segment>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [ngSwitch]="segment">
+	<!--MESSAGES -->
+	<div *ngSwitchCase="'messages'">
+
+		<ion-item-divider *ngIf="yeniMesajOlanlar.length > 0" color="light">
+			Yeni mesaj içeren ilanlar
+		</ion-item-divider>
+
+		<ion-list *ngFor="let ilan of yeniMesajOlanlar">
+			<ion-item (click)="ilanDetay(ilan)">
+				<ion-avatar item-left>
+					<img *ngIf="ilan.ilaniVerenKullanici.avatar" src="{{ilan.ilaniVerenKullanici.avatar.downloadUrl}}">
+					<img *ngIf="ilan.ilaniVerenKullanici.avatar == null" src="assets/images/avatareklenmemis.jpg">
+				</ion-avatar>
+				<h2>{{ilan.baslik}}</h2>
+			</ion-item>
+		</ion-list>
+
+		<ion-item-divider color="light">
+			Mesaj yazdığınız tüm ilanlar
+		</ion-item-divider>
+
+		<ion-card *ngIf="mesajAtilanIlanlar.length == 0">
+			<ion-card-header>
+				Henüz bir ilana bildirimde bulunmamış sınız.
+			</ion-card-header>
+			<ion-card-content>
+				İlanlara karşı sorduğunuz sorular, iletiler bu bölümde listelenir
+			</ion-card-content>
+		</ion-card>
+
+		<ion-list *ngIf="mesajAtilanIlanlar.length > 0">
+			<div *ngFor="let ilan of mesajAtilanIlanlar; let i = index;">
+				<ion-item *ngIf="i < toplamIlan" (click)="ilanDetay(ilan)">
+					<ion-thumbnail item-left>
+						<img *ngIf="ilan.resimler" src="{{ilan.resimler[0].downloadUrl}}">
+						<img *ngIf="ilan.resimler == null" src="assets/images/resimeklenmemis.jpg">
+					</ion-thumbnail>
+					<h2>{{ilan.baslik}}</h2>
+					<h3>{{ilan.displayDate}}</h3>
+				</ion-item>
+			</div>
+		</ion-list>
+
+		<ion-infinite-scroll (ionInfinite)="doInfiniteMessages($event)">
+			<ion-infinite-scroll-content></ion-infinite-scroll-content>
+		</ion-infinite-scroll>
+	</div>
+
+	<!--FAVS -->
+	<div *ngSwitchCase="'favs'">
+		<ion-item-divider color="light">
+			Favorilerinize eklediğiniz ilanlar
+		</ion-item-divider>
+
+		<ion-card *ngIf="favoriIlanlar.length == 0">
+			<ion-card-header>
+				Henüz favorilerinize ekleme yapmamışsınız.
+			</ion-card-header>
+			<ion-card-content>
+				Bu bölümde favorilerinizden olarak belirttiğiniz ilanlar listelenir
+			</ion-card-content>
+		</ion-card>
+
+		<ion-list *ngIf="favoriIlanlar.length > 0">
+			<div *ngFor="let ilan of favoriIlanlar; let i = index;">
+				<ion-item *ngIf="i < toplamIlan" (click)="ilanDetay(ilan)">
+					<ion-thumbnail item-left>
+						<img *ngIf="ilan.resimler" src="{{ilan.resimler[0].downloadUrl}}">
+						<img *ngIf="ilan.resimler == null" src="assets/images/resimeklenmemis.jpg">
+					</ion-thumbnail>
+					<h2>{{ilan.baslik}}</h2>
+					<h3>{{ilan.displayDate}}</h3>
+				</ion-item>
+			</div>
+		</ion-list>
+
+		<ion-infinite-scroll (ionInfinite)="doInfiniteFavs($event)">
+			<ion-infinite-scroll-content></ion-infinite-scroll-content>
+		</ion-infinite-scroll>
+	</div>
+
+</ion-content>

@@ -1,0 +1,23 @@
+page-login {
+    .login{
+        .girisheader{
+            text-align: center;
+            img.logo{
+                width: 20% !important;
+            }
+            h2 {
+                margin: 0 0 0 0;
+            }
+        }
+    }
+    .scroll-content {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    .item:last-child {
+        border-bottom-width: 1px !important;
+        border-bottom-left-radius:0 !important;
+        border-bottom-right-radius:0 !important;
+    }
+}

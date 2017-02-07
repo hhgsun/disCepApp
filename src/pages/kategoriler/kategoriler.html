@@ -1,0 +1,43 @@
+<ion-header>
+	<ion-navbar no-border-bottom>
+		<ion-title *ngIf="secilenKat">{{secilenKat.adi}}</ion-title>
+		<ion-title *ngIf="secilenKat == null">Kategoriler</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content fullscreen class="kategoriler">
+
+	<!-- TÜM KATEGORİLER -->
+	<ion-list class="kategoriler-liste" *ngIf="secilenKat == null">
+		<button ion-button icon-left *ngFor="let item of kategoriler" (click)="kategoriDetay(item)" [ngStyle]="{'background-image': 'url('+ item.resim.downloadURL +')'}">
+      		{{item.adi}}
+    	</button>
+		<ion-item></ion-item><br>
+	</ion-list>
+
+	<!-- KATEGORİ İLANLARI -->
+	<div *ngIf="secilenKat">
+		<ion-item-group>
+			<ion-item-divider>{{secilenKat.aciklama}}</ion-item-divider>
+		</ion-item-group>
+		<ion-list *ngIf="kategoriIlanlari.length > 0">
+
+			<div *ngFor="let ilan of kategoriIlanlari; let i = index">
+				<ilanitem *ngIf="i < toplamIlan" [ilan]="ilan" (click)="ilanDetay(ilan)"></ilanitem>
+			</div>
+
+		</ion-list>
+		<ion-list *ngIf="kategoriIlanlari.length == 0">
+			<ion-item>
+				<h2>İlan Bulunmamaktadır</h2>
+			</ion-item>
+		</ion-list>
+	</div>
+
+	<ion-item class="display-none"></ion-item>
+
+	<ion-infinite-scroll *ngIf="secilenKat" (ionInfinite)="doInfinite($event)">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+
+</ion-content>

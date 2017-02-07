@@ -1,0 +1,6 @@
+<header>
+    <img *ngIf="ilan.resimler" src="{{ilan.resimler[0].downloadUrl}}">
+    <img *ngIf="ilan.resimler == null" src="assets/images/resimeklenmemis.jpg">
+    <div class="shadow"></div>
+    <h2>{{ilan.baslik}}</h2>
+</header>

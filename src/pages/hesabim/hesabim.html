@@ -1,0 +1,80 @@
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>
+			{{kullanici.email}}
+		</ion-title>
+		<ion-buttons end>
+			<button ion-button icon-left (click)="cikisYap()" small>
+				<ion-icon name="log-out"></ion-icon>
+				Çıkış Yap
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+
+	<ion-item-divider>
+		Kullanıcı Bilgilerim ({{kullanici.authClass}})
+		<button ion-button icon-left item-right outline (click)="profilGoruntule(kullanici)">
+			<ion-icon name="eye"></ion-icon>
+			Önizleme
+		</button>
+	</ion-item-divider>
+
+	<ion-list>
+
+		<ion-item (click)="avatarDetay(kullanici.avatar)">
+			<ion-avatar item-left>
+				<img *ngIf="kullanici.avatar" [src]="kullanici.avatar.downloadUrl">
+				<img *ngIf="kullanici.avatar == null" src="assets/images/avatareklenmemis.jpg">
+			</ion-avatar>
+			Profil Resmini Düzenle
+		</ion-item>
+
+		<ion-item>
+			<ion-label stacked>İsim</ion-label>
+			<ion-input required type="text" [(ngModel)]="kullanici.ad"></ion-input>
+		</ion-item>
+
+		<ion-item>
+			<ion-label stacked>Soyad</ion-label>
+			<ion-input required type="text" [(ngModel)]="kullanici.soyad"></ion-input>
+		</ion-item>
+
+		<ion-item>
+			<ion-label stacked>Meslek</ion-label>
+			<ion-input type="text" [(ngModel)]="kullanici.meslek"></ion-input>
+		</ion-item>
+
+		<ion-item>
+			<ion-label stacked>Telefon Numarası</ion-label>
+			<ion-input type="tel" [(ngModel)]="kullanici.telNo"></ion-input>
+		</ion-item>
+
+		<ion-item *ngIf="kullanici.telNo != ''">
+			<ion-label stacked>Telefon Numaramı Göster</ion-label>
+			<ion-toggle [(ngModel)]="kullanici.telNoPaylasim" checked="true"></ion-toggle>
+		</ion-item>
+
+		<ion-item *ngIf="kullanici.authClass == 'premium'">
+			<h2>Premium</h2>
+			<ion-row>
+				<ion-col width-50>
+					<p>Başlangıç</p>
+					<p>{{kullanici.authClassPremiumStartDate}}</p>
+				</ion-col>
+				<ion-col width-50>
+					<p>Bitiş</p>
+					<p>{{kullanici.authClassPremiumFinishDate}}</p>
+				</ion-col>
+			</ion-row>
+		</ion-item>
+
+		<div padding>
+			<button ion-button outline block (click)="profilGuncelle()">Güncelle</button>
+		</div>
+
+	</ion-list>
+
+</ion-content>

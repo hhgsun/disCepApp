@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-nav>
+
+    <ion-item class="profil-info">
+      <ion-avatar item-left (click)="avatarOnizleme(kullanici.avatar)">
+        <img *ngIf="kullanici.avatar" src="{{kullanici.avatar.downloadUrl}}">
+        <img *ngIf="kullanici.avatar == null" src="assets/images/avatareklenmemis.jpg">
+      </ion-avatar>
+      <h2>{{kullanici.ad}} {{kullanici.soyad}}</h2>
+      <p>{{kullanici.email}}</p>
+      <p>{{kullanici.meslek}}</p>
+    </ion-item>
+
+    <ion-buttons end>
+      <button ion-button item-right icon-only (click)="dissmis()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-nav>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-item-divider *ngIf="ilanlar.length > 0">Kullanıcının ilanları</ion-item-divider>
+  <ion-item-divider *ngIf="ilanlar.length == 0">Kullanıcının ilanları bulunmamaktadır</ion-item-divider>
+
+  <ion-list>
+    <ion-item *ngFor="let ilan of ilanlar" (click)="ilanDetay(ilan)">
+      <ion-thumbnail item-left>
+        <img *ngIf="ilan.resimler" src="{{ilan.resimler[0].downloadUrl}}">
+        <img *ngIf="ilan.resimler == null" src="assets/images/resimeklenmemis.jpg">
+      </ion-thumbnail>
+      <h2>{{ilan.baslik}}</h2>
+      <h3>{{ilan.displayDate}}</h3>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+<div *ngIf="kullanici.telNoPaylasim">
+  <ion-footer *ngIf="kullanici.telNo">
+    <ion-toolbar padding>
+      <button ion-button block icon-left icon-only *ngIf="aktifUid != kullanici.userId" (click)="telAra()">
+      <ion-icon name="call"></ion-icon>
+      {{kullanici.ad}}'i Ara
+    </button>
+
+    <button ion-button block icon-left icon-only *ngIf="aktifUid == kullanici.userId">
+      <ion-icon name="call"></ion-icon>
+      {{kullanici.telNo}}
+    </button>
+    </ion-toolbar>
+  </ion-footer>
+</div>

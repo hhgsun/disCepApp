@@ -1,0 +1,347 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/v2/theming/
+@import "ionic.globals";
+
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+
+$text-color:        #000;
+$background-color:  #fff;
+
+
+// Named Color Variables
+// --------------------------------------------------
+// Named colors makes it easy to reuse colors on various components.
+// It's highly recommended to change the default colors
+// to match your app's branding. Ionic uses a Sass map of
+// colors so you can add, rename and remove colors as needed.
+// The "primary" color is the only required color in the map.
+
+$colors: (
+  primary:    #387ef5,
+  secondary:  #32db64,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  dark:       #222
+);
+
+
+// App iOS Variables
+// --------------------------------------------------
+// iOS only Sass variables can go here
+
+
+
+
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+
+
+
+
+// App Windows Variables
+// --------------------------------------------------
+// Windows only Sass variables can go here
+
+
+
+
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+
+@import "ionic.theme.default";
+
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/v2/ionicons/
+
+$ionicons-font-path: "../assets/fonts";
+@import "ionicons";
+
+// Klavye Açıkken tablar gizlenir ve scroll-content alttan boşluk kalkar
+body.keyboard-is-open .tabbar {
+  display: none;
+}
+body.keyboard-is-open .scroll-content {
+  margin-bottom: 0px !important;
+}
+
+// tüm ion-infinite ler
+ion-infinite-scroll {
+    margin-bottom: 30px;
+}
+
+// slide ilan resimleri
+page-ilan-detay {
+    ion-slides {
+        height: 300px !important;
+    }
+}
+ion-slides {
+    background: #222 !important;
+}
+
+// Logo için
+ion-title {
+    img {
+        height: 40px;
+        vertical-align: middle;
+    }
+}
+
+// yazılar sığmazsa alt alta alır
+ion-label {
+    white-space:normal !important;
+}
+
+// ilan ver deki resimler
+ion-item.ilan-ver-resimler-box {
+    div.image-box {
+        width: 32%;
+        height: 70px;
+        overflow: hidden;
+        float: left;
+        margin: 2px;
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+    button.image-box {
+        width: 32%;
+        height: 70px;
+        float: left;
+    }
+}
+
+.clear {
+    clear: both;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.display-none {
+    display: none !important;
+}
+
+// Yuvarlak Avatar
+ion-avatar {
+    overflow: hidden;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    img {
+        height: auto !important;
+        border-radius: 0 !important;
+    }
+}
+
+// ilanitem : ŞERİT : İLAN LİSTESİNDEKİ İTEM LER
+ion-thumbnail {
+    width: 70px !important;
+    height: 50px !important;
+    overflow: hidden !important;
+    img {
+        width: 100%;
+        height: auto !important;
+        min-width: 100% !important;
+        min-height: 100% !important;
+    }
+}
+
+// ilanitem : KUTU : İLAN LİSTEDEKİ İTEM LER
+ilanitem {
+    width: 46%;
+    height: auto;
+    float: left;
+    margin: 10px 0 0 10px;
+    border: 1px solid #387ef5;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    header {
+        position: relative;
+        overflow: hidden;
+        height: 150px;
+        img {
+            border-top-right-radius: 3px;
+            border-top-left-radius: 3px;
+            width: 100%;
+            height: auto;
+        }
+        .shadow {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                background: linear-gradient(
+                    to bottom,
+                    transparent 0,rgba(31,31,31,0) 31%,rgba(61,61,61,0.41) 70%,rgba(0,0,0,0.95) 100%);
+        }
+        h2 {
+            position: absolute;
+            bottom: 0;
+            color: #fff;
+            padding: 5px;
+            margin-bottom: 0px !important;
+            font-size: 1.8rem;
+        }
+    }
+    footer {
+        position: relative;
+        overflow: hidden;
+        height: 40px;
+        .avatar {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 20%;
+            max-height: 90%;
+            border-radius: 5px;
+            margin: 2px;
+            overflow: hidden;
+            img {
+                min-width: 100%;
+                min-height: 100%;
+                height: auto;
+                width: auto;
+            }
+        }
+        .info {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            margin: 5px;
+            width: 75%;
+            max-height: 90%;
+            overflow: hidden;
+        }
+    }
+}
+
+@media screen and (min-width: 480px) {
+    ilanitem{
+        width: 22%;
+        margin-left: 15px !important;
+    }
+}
+
+.premium-slide-cerceve {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #dedede;
+    div.cerceve-space {
+        width: 2400px;
+        padding-right: 10px;
+        ilanitempremium {
+            width: 120px;
+            height: 100px;
+            float: left;
+            margin: 10px 0 0 10px;
+            border: 2px solid #387ef5;
+            border-radius: 5px;
+            header {
+                position: relative;
+                overflow: hidden;
+                height: 100%;
+                img {
+                    border-radius: 3px;
+                    width: 100%;
+                    height: auto;
+                }
+                .shadow {
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 0,rgba(31,31,31,0) 31%,rgba(61,61,61,0.41) 70%,rgba(0,0,0,0.95) 100%);
+                }
+                h2 {
+                    position: absolute;
+                    bottom: 0;
+                    color: #fff;
+                    padding: 5px;
+                    margin-bottom: 0px !important;
+                    font-size: 1.8rem;
+                }
+            }
+        }
+        .premium-ekle-button {
+            width: 120px;
+            height: 100px;
+            float: left;
+            text-align: center;
+            margin: 10px 0 0 10px;
+            background: #e8e8e8;
+            color: #a9a9a9;
+            justify-content: center;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            ion-icon {
+                font-size: 3rem;
+                margin-top: 10px;
+            }
+            h3 {
+                margin-top: 0 !important;
+            }
+        }
+    }
+    
+}
+
+
+
+// PROFİL DETAY MODAL ////////////////////////////////////////////////
+.profil-detay-modal {
+    .modal-wrapper {
+        width: 80% !important;
+        height: 80% !important;
+        left: 0 !important;
+        right: 0 !important;
+        margin: 20% auto !important;
+    }
+}
+@media not all and (min-height: 600px) and (min-width: 768px) {
+    // let profilDetayModal = this.modalCtrl.create(ProfildetayPage...
+    // profilDetayModal._cssClass = "profil-detay-modal";
+    // modala class ataması yaptık
+    .profil-detay-modal {
+        ion-backdrop {
+            z-index: 0 !important;
+            visibility: visible !important;
+        }
+    }
+}
+@media not all and (max-width: 768px) {
+    // let profilDetayModal = this.modalCtrl.create(ProfildetayPage...
+    // profilDetayModal._cssClass = "profil-detay-modal";
+    // modala class ataması yaptık
+    .profil-detay-modal {
+        .modal-wrapper {
+            top: 0 !important;
+        }
+    }
+}
+
+//////////////////////////////////////////////// PROFİL DETAY MODAL //

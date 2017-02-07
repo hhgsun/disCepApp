@@ -1,0 +1,16 @@
+page-kategori {
+   .kategoriler {
+        ion-list.kategoriler-liste{
+            height: 99%;
+            margin-top: 10px;
+            text-align: center;
+            button{
+                width: 95%;
+                height: 25%;
+                text-shadow: 2px 2px 2px black;
+                font-size: 20px;
+                background-size: cover !important; 
+            }
+        }
+    }
+}

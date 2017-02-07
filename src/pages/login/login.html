@@ -1,0 +1,115 @@
+<ion-header>
+    <ion-navbar *ngIf="kayitOlPage != null || sifreYenilePage != null">
+        <ion-title *ngIf="kayitOlPage == null && sifreYenilePage == null">Giriş Yap</ion-title>
+        <ion-title *ngIf="kayitOlPage">Kayıt Ol</ion-title>
+        <ion-title *ngIf="sifreYenilePage">Şifre Yenile</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <!-- GİRİS YAP -->
+    <div class="login" *ngIf="kayitOlPage == null && sifreYenilePage == null" padding [@flyInBottomFast]="cloudState" id="cloud-layer">
+        <ion-row>
+            <ion-col>
+                <div class="girisheader">
+                    <img [@flyInBottomSlow]="logoState" class="logo" src="assets/images/logo2.png">
+                    <h2>DişCep</h2>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-list inset [@bounceInBottom]="formState">
+                    <ion-item>
+                        <ion-label floating>Email</ion-label>
+                        <ion-input type="email" [(ngModel)]="loginData.email"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label floating>Şifre</ion-label>
+                        <ion-input type="password" [(ngModel)]="loginData.password"></ion-input>
+                    </ion-item>
+                    <ion-item class="display-none"></ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <div padding>
+                    <button [@fadeIn]="loginState" ion-button icon-left block (click)="girisYap()">Giriş Yap</button>
+                    <button [@fadeIn]="loginState" ion-button icon-left block clear (click)="sifreYenileSayfasiniAc()">Şifremi Unuttum</button>
+                </div>
+                <br>
+                <div padding>
+                    <button [@fadeIn]="loginState" ion-button icon-left block outline (click)="kayitOlSayfasiniAc()">Kayıt Ol</button>
+                </div>
+            </ion-col>
+        </ion-row>
+    </div>
+
+    <!-- KAYIT OL -->
+    <div *ngIf="kayitOlPage">
+        <ion-item>
+            <ion-avatar item-left>
+                <img class="logo" src="assets/images/logo2.png">
+            </ion-avatar>
+            DişCep
+        </ion-item>
+        <ion-row>
+            <ion-col>
+                <ion-list inset>
+                    <ion-item>
+                        <ion-label floating>İsim</ion-label>
+                        <ion-input type="text" [(ngModel)]="registerData.ad"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label floating>Soyisim</ion-label>
+                        <ion-input type="text" [(ngModel)]="registerData.soyad"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label floating>E-Mail Adresi</ion-label>
+                        <ion-input type="email" [(ngModel)]="registerData.email"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label floating>Şifre</ion-label>
+                        <ion-input type="password" [(ngModel)]="registerData.password"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label floating>Şifre Tekrarı</ion-label>
+                        <ion-input type="password" [(ngModel)]="registerData.passwordRep"></ion-input>
+                    </ion-item>
+                    <ion-item class="display-none"></ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <div padding>
+                    <button ion-button icon-left block (click)="kayitOl()">Kayıtı tamamla</button>
+                </div>
+            </ion-col>
+        </ion-row>
+    </div>
+
+    <!-- ŞİFRE YENİLE -->
+    <div *ngIf="sifreYenilePage" padding>
+        <ion-row>
+            <ion-col>
+                <ion-list>
+                    <ion-item>
+                        <ion-label floating>Mail Adresiniz</ion-label>
+                        <ion-input type="text" [(ngModel)]="passResetMail"></ion-input>
+                    </ion-item>
+                    <ion-item class="display-none"></ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <div padding>
+                    <button ion-button icon-left block (click)="sifreYenile()">Gönder</button>
+                </div>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>

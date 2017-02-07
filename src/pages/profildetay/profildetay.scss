@@ -1,0 +1,10 @@
+page-profildetay {
+    border-radius: 5px !important;
+    overflow: hidden;
+    .profil-info {
+        background: none !important;
+        .item-inner {
+            border: none !important;
+        }
+    }
+}

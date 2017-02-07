@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "761445861651",
+    "firebase_url": "https://discep-c50e3.firebaseio.com",
+    "project_id": "discep-c50e3",
+    "storage_bucket": "discep-c50e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761445861651:android:1d1bc9f399a3bb01",
+        "android_client_info": {
+          "package_name": "com.ionicframework.discepapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761445861651-bqhh88f6o3cvk27r3qp97jd9eblg142s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHsuq5r6W4wg-hTOh8i41b1y97_mxUK2o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

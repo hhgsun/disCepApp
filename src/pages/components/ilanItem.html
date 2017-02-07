@@ -1,0 +1,16 @@
+<header>
+    <img *ngIf="ilan.resimler" src="{{ilan.resimler[0].downloadUrl}}">
+    <img *ngIf="ilan.resimler == null" src="assets/images/resimeklenmemis.jpg">
+    <div class="shadow"></div>
+    <h2>{{ilan.baslik}}</h2>
+</header>
+
+<footer>
+    <div class="avatar">
+        <img *ngIf="ilan.ilaniVerenKullanici.avatar" src="{{ilan.ilaniVerenKullanici.avatar.downloadUrl}}">
+        <img *ngIf="ilan.ilaniVerenKullanici.avatar == null" src="assets/images/avatareklenmemis.jpg">
+    </div>
+    <div class="info">
+        {{ilan.ilaniVerenKullanici.ad}} {{ilan.ilaniVerenKullanici.soyad}}
+    </div>
+</footer>

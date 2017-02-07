@@ -1,0 +1,55 @@
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-buttons start>
+			<button ion-button icon-left icon-only (click)="searchAc()">
+        		<ion-icon name="search"></ion-icon>
+      		</button>
+		</ion-buttons>
+
+		<ion-title class="logo">
+			<span (click)="logoAc()">
+				<img src="assets/images/logo.png"> DişCep
+			</span>
+		</ion-title>
+
+		<ion-buttons outline end>
+			<button ion-button icon-left icon-only (click)="ilanVer()">
+				<ion-icon name="create"></ion-icon>
+				İlan Ver
+			</button>
+		</ion-buttons>
+
+	</ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+	<div class="premium-slide-cerceve">
+		<div class="cerceve-space">
+			<ilanitempremium *ngFor="let ilan of premiumIlanlar" [ilan]="ilan" (click)="ilanDetay(ilan)"></ilanitempremium>
+			<div class="premium-ekle-button" (click)="ilanVer()" *ngIf="ilanlar.length > 0">
+				<ion-icon name="add-circle"></ion-icon>
+				<h3>Sabit İlan Ekle</h3>
+			</div>
+		</div>
+	</div>
+
+
+	<ion-list>
+		<div *ngIf="ilanlar.length == 0" class="text-center">
+			<ion-spinner></ion-spinner>
+		</div>
+
+		<ilanitem *ngFor="let ilan of ilanlar" [ilan]="ilan" (click)="ilanDetay(ilan)"></ilanitem>
+
+		<div class="clear"></div>
+	</ion-list>
+
+	<ion-infinite-scroll *ngIf="burayaKadarBox == false" (ionInfinite)="doInfinite($event)">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+	<ion-card-header *ngIf="burayaKadarBox" class="text-center">
+		<p>Buraya Kadar</p>
+	</ion-card-header>
+</ion-content>

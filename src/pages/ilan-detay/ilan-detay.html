@@ -1,0 +1,93 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>{{ilan.baslik}}</ion-title>
+		<ion-buttons end *ngIf="aktifUid == ilan.ilaniVerenKullaniciId">
+			<button ion-button icon-only (click)="ilanDuzenle()">
+				<ion-icon name="create"></ion-icon>
+				Düzenle
+			</button>
+			<button ion-button icon-only (click)="ilanSil()">
+				<ion-icon name="trash"></ion-icon>
+				Sil
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content *ngIf="ilan">
+	<ion-item-divider *ngIf="ilan.ilaniVerenKullanici" (click)="profilGoruntule(ilan.ilaniVerenKullanici)">
+		<ion-avatar item-left>
+			<img *ngIf="ilan.ilaniVerenKullanici.avatar" src="{{ilan.ilaniVerenKullanici.avatar.downloadUrl}}">
+			<img *ngIf="ilan.ilaniVerenKullanici.avatar == null" src="assets/images/avatareklenmemis.jpg">
+		</ion-avatar>
+		<h2>{{ilan.ilaniVerenKullanici.ad}} {{ilan.ilaniVerenKullanici.soyad}}</h2>
+		<p>{{ilan.ilaniVerenKullanici.email}}</p>
+	</ion-item-divider>
+
+	<ion-list-header color="danger" *ngIf="ilan.durum == 'silindi'">
+		Bu ilan Kaldırılmıştır !
+	</ion-list-header>
+	<ion-list-header color="dark" *ngIf="ilan.durum == 'beklemede'">
+		Bu ilan şuan aktif değildir !
+	</ion-list-header>
+
+	<ion-list-header class="ilan-baslik" light>
+		<span>{{ilan.baslik}}</span>
+	</ion-list-header>
+
+	<div *ngIf="ilan.resimler">
+		<ion-slides *ngIf="ilan.resimler.length > 0">
+			<ion-slide *ngFor="let src of ilan.resimler; let i=index">
+				<img src="{{src.downloadUrl}}" (click)="goImagesShow(ilan.resimler, i)">
+			</ion-slide>
+		</ion-slides>
+	</div>
+
+	<p padding>{{ilan.aciklama}}</p>
+	<p padding>Adres: <br> {{ilan.adres}}</p>
+
+	<ion-item *ngIf="ilan.youtubeVideoId">
+		<iframe [src]="ilan.youtubeVideoId" frameborder="0" allowfullscreen></iframe>
+	</ion-item>
+
+	<ion-list inset *ngIf="ilan.ilaniVerenKullaniciId != aktifUid">
+		<ion-item color="light" (click)="favoriIslem()">
+			<div *ngIf="favorilereEkliMi == false">Favorilerime Ekle</div>
+			<div *ngIf="favorilereEkliMi">Favorilerimde</div>
+			<ion-icon *ngIf="favorilereEkliMi == false" name="ios-star-outline" item-right></ion-icon>
+			<ion-icon *ngIf="favorilereEkliMi" name="ios-star" item-right></ion-icon>
+		</ion-item>
+	</ion-list>
+
+	<!-- CHATS -->
+	<ion-list>
+		<div *ngFor="let chat of chats">
+			<ion-item-group *ngIf="chat.olusturanId == aktifUid || ilan.ilaniVerenKullaniciId == aktifUid">
+				<ion-item-divider *ngIf="chat.yollayanKullanici" color="light" (click)="profilGoruntule(chat.yollayanKullanici)">
+					<ion-avatar item-left>
+						<img *ngIf="chat.yollayanKullanici.avatar" src="{{chat.yollayanKullanici.avatar.downloadUrl}}">
+						<img *ngIf="chat.yollayanKullanici.avatar == undefined" src="assets/images/avatareklenmemis.jpg">
+					</ion-avatar>
+					<h2>{{chat.yollayanKullanici.ad}} {{chat.yollayanKullanici.soyad}}</h2>
+					<h3>{{chat.yollayanKullanici.meslek}}</h3>
+				</ion-item-divider>
+				<div *ngIf="chat.messages">
+					<ion-item *ngFor="let message of chat.messages">
+						<!-- ilan sahibinden mesaj -->
+						<h2 *ngIf="ilan.ilaniVerenKullaniciId == message.yollayanId" class="mesaj-ilansahibi">{{message.mesaj}}</h2>
+						<!-- kullanıcıdan mesaj -->
+						<h2 *ngIf="ilan.ilaniVerenKullaniciId != message.yollayanId" class="mesaj-kullanici">{{message.mesaj}}</h2>
+					</ion-item>
+				</div>
+				<div padding>
+					<button ion-button block outline (click)="mesajYolla(chat)">MESAJ YAZ</button>
+				</div>
+			</ion-item-group>
+		</div>
+	</ion-list>
+	<div padding *ngIf="aktifUid != ilan.ilaniVerenKullaniciId && aktifKullaniciChatAcmisMi == false">
+		<button ion-button block (click)="chatYolla()">MESAJ YAZ</button>
+	</div>
+	<!-- //chats -->
+
+</ion-content>

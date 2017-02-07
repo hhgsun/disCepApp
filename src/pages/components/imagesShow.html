@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-navbar color="dark" no-border no-shadow>
+        <ion-buttons start>
+            <button ion-button icon-left (click)="dismiss()">
+                <span primary showWhen="ios">Kapat</span>
+                <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <ion-slides *ngIf="gelenResimler.length > 0" pager="true">
+        <ion-slide *ngFor="let src of gelenResimler">
+            <img src="{{src.downloadUrl}}">
+        </ion-slide>
+    </ion-slides>
+</ion-content>

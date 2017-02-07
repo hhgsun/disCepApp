@@ -1,0 +1,32 @@
+<ion-header>
+
+	<ion-navbar>
+		<ion-searchbar #searchbar placeholder="Arama Yapın" cancelButtonText="Vazgeç" (ionInput)="searchGet($event)"></ion-searchbar>
+		<ion-buttons end>
+			<button ion-button icon-left (click)="dismiss()">
+				<ion-icon name="close"></ion-icon> Vazgeç
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+
+</ion-header>
+
+<ion-content>
+	<ion-list *ngIf="ilanlar.length > 0">
+		<div *ngFor="let ilan of ilanlar; let i = index">
+			<ilanitem *ngIf="i < toplamIlan" [ilan]="ilan" (click)="ilanDetay(ilan)"></ilanitem>
+		</div>
+		<div class="clear"></div>
+	</ion-list>
+
+	<ion-infinite-scroll *ngIf="ilanlar.length > 0" (ionInfinite)="doInfinite($event)">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+
+	<ion-list *ngIf="ilanlar.length == 0 && searchText != null && searchText != ''">
+		<ion-item>
+			<h2>Sonuç Bulunamadı</h2>
+		</ion-item>
+	</ion-list>
+
+</ion-content>

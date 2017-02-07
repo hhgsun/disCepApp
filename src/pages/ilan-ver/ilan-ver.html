@@ -1,0 +1,80 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            <span *ngIf="updateData == undefined">İlan Ver</span>
+            <span *ngIf="updateData">İlan Güncelle</span>
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button icon-left (click)="dismiss()">
+                <span primary showWhen="ios">İptal Et</span>
+                <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+
+        <ion-item>
+            <ion-label stacked>İlan Başlığı</ion-label>
+            <ion-input [(ngModel)]="ilanVerData.baslik" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Açıklama</ion-label>
+            <ion-textarea rows="3" [(ngModel)]="ilanVerData.aciklama"></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Adres</ion-label>
+            <ion-textarea [(ngModel)]="ilanVerData.adres"></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Kategori Ekle</ion-label>
+            <ion-select [(ngModel)]="ilanVerData.kategorileri" multiple="true" cancelText="İptal" okText="Ekle">
+                <ion-option *ngFor="let item of tumKategoriler" value="{{item.$key}}">{{item.adi}}</ion-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item class="ilan-ver-resimler-box">
+            <div *ngFor="let sec of secilenResimler" (click)="resimDetay(sec)" class="image-box">
+                <img [src]="sec.downloadUrl">
+            </div>
+            <button *ngIf="secilenResimler.length < 6" ion-button icon-left color="light" (click)="resimSec()" class="image-box">
+                <ion-icon name="add"></ion-icon>
+                Resim Ekle
+            </button>
+        </ion-item>
+
+        <ion-item *ngIf="authClass == 'admin'">
+            <input id="file" type="file" (change)="resimSecInput($event)" />
+        </ion-item>
+
+        <div *ngIf="authClass == 'premium' || authClass == 'admin'">
+            <div *ngIf="authClassPremiumFinish == false || authClass == 'admin'">
+                <ion-item>
+                    <ion-label stacked>Premium İlan</ion-label>
+                    <ion-toggle [(ngModel)]="ilanVerData.premium" checked="false"></ion-toggle>
+                </ion-item>
+                <ion-item>
+                    <ion-label stacked>Youtube video Id</ion-label>
+                    <ion-input [(ngModel)]="ilanVerData.youtubeVideoId" type="text"></ion-input>
+                </ion-item>
+            </div>
+            <ion-item *ngIf="authClassPremiumFinish">
+                Premium üyelik süreniz dolmuştur
+            </ion-item>
+        </div>
+
+        <ion-item class="display-none"></ion-item>
+
+    </ion-list>
+
+    <div padding>
+        <button ion-button icon-left *ngIf="updateData == undefined" padding block (click)="ilaniGonder('gonder')">İLANI GÖNDER</button>
+        <button ion-button icon-left *ngIf="updateData" padding block secondary (click)="ilaniGonder('guncelle')">GÜNCELLE</button>
+    </div>
+
+</ion-content>

@@ -1,0 +1,36 @@
+<ion-header no-border no-shadow>
+  <ion-navbar>
+    <ion-title></ion-title>
+        <ion-buttons end>
+      <button ion-button icon-right color="primary" (click)="devamEt()">
+        Atla
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-slides>
+    <ion-slide *ngFor="let slide of slides">
+      <img [src]="slide.image" class="slide-image" />
+      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+      <p [innerHTML]="slide.description"></p>
+    </ion-slide>
+    <ion-slide>
+      <ion-toolbar>
+      </ion-toolbar>
+      <img src="assets/images/intro-4.png" class="slide-image" />
+      <h2 class="slide-title">Diş Dünyasına Hoşgeldin</h2>
+      <button ion-button large clear icon-right color="primary" (click)="devamEt()">
+        Devam Et
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+
+
+<!--ion-footer>
+  <button ion-button block full large (click)="devamEt()">DEVAM ET</button>
+</ion-footer-->
