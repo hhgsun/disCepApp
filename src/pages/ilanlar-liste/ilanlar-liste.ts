@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppVersion } from 'ionic-native';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
 
@@ -12,6 +13,7 @@ import { BaseService } from '../services/baseService';
   templateUrl: 'ilanlar-liste.html'
 })
 export class IlanlarListePage {
+  public appVersion;
   public premiumIlanlar = [];
   public ilanlar = [];
   toplamIlan = this.baseService.toplamIlan;
@@ -27,6 +29,10 @@ export class IlanlarListePage {
   }
 
   ionViewDidLoad() {
+    AppVersion.getVersionNumber().then(vn => {
+      this.appVersion = vn;
+    });
+
     this.ilanlar = [];
     this.premiumIlanlar = [];
     this.angularFire.database.list(this.baseService.paths.lists, {
@@ -98,7 +104,7 @@ export class IlanlarListePage {
   }
 
   logoAc() {
-    this.baseService.presentAlert("DişCep Uygulaması","Dental sektöründekilerin iletişim kurmalarını sağlar")
+    this.baseService.presentAlert("DişCep Uygulaması", "Dental sektöründekilerin iletişim kurmalarını sağlar" + "<br>v" + this.appVersion)
   }
 
   doInfinite(infiniteScroll) {

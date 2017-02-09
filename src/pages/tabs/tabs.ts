@@ -5,8 +5,8 @@ import { KategoriPage } from '../kategoriler/kategoriler';
 import { GecmisPage } from '../gecmis/gecmis';
 import { HesabimPage } from '../hesabim/hesabim';
 
-//import { BaseService } from '../services/baseService';
-//import { AngularFire } from 'angularfire2';
+import { BaseService } from '../services/baseService';
+import { AngularFire } from 'angularfire2';
 
 @Component({
     templateUrl: 'tabs.html'
@@ -19,11 +19,8 @@ export class TabsPage {
     tab3Root: any = GecmisPage;
     tab4Root: any = HesabimPage;
 
-    // public yeniMesajOlanlar = [];
-    // [tabBadge]="yeniMesajOlanlar.length" tabBadgeStyle="danger" ::bu kısım html ion-tab a eklenecek
-
-    constructor() {
-        /*
+    public yeniMesajOlanlar;
+    constructor(private angularFire: AngularFire, private baseService: BaseService) {
         this.angularFire.auth.subscribe(auth => {
             if (auth) {
                 // YENİ MESAJ SAYISI AYNI İLANA AİT MESAJLARI TEK GÖSTERME
@@ -38,11 +35,10 @@ export class TabsPage {
                         })
                         return ilanIds;
                     }).subscribe(ids => {
-                        this.yeniMesajOlanlar = ids;
+                        this.yeniMesajOlanlar = ids.length;
                     })
             }
         })
-        */
     }
 
 }
