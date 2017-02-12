@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AppVersion } from 'ionic-native';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, Platform } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
 
 import { IlanDetayPage } from '../ilan-detay/ilan-detay';
@@ -24,15 +24,17 @@ export class IlanlarListePage {
     private navParams: NavParams,
     private angularFire: AngularFire,
     private modalCtrl: ModalController,
-    private baseService: BaseService
+    private baseService: BaseService,
+    private platform: Platform
   ) {
+    platform.ready().then(() => {
+      AppVersion.getVersionNumber().then(vn => {
+        this.appVersion = vn;
+      });
+    })
   }
 
-  ionViewDidLoad() {
-    AppVersion.getVersionNumber().then(vn => {
-      this.appVersion = vn;
-    });
-
+  ionViewDidEnter() {
     this.ilanlar = [];
     this.premiumIlanlar = [];
     this.angularFire.database.list(this.baseService.paths.lists, {
@@ -44,7 +46,6 @@ export class IlanlarListePage {
     }).map(ilanlar => {
       var list = [];
       for (let ilan of ilanlar.reverse()) {
-        if (ilan.durum == 'aktif') {
           this.angularFire.database.object(this.baseService.paths.users + "/" + ilan.ilaniVerenKullaniciId)
             .map(user => {
               return user;
@@ -52,10 +53,10 @@ export class IlanlarListePage {
               ilan["ilaniVerenKullanici"] = user;
               list.push(ilan);
             });
-        }
       }
       return list;
     }).subscribe(ilanlar => {
+      this.ilanlar = [];
       this.ilanlar = ilanlar;
       this.premiumIlanlariYukle()
     })
@@ -70,6 +71,7 @@ export class IlanlarListePage {
       }]
     }).map(ilanlar => {
       var list = [];
+      this.premiumIlanlar = [];
       for (let ilan of ilanlar.reverse()) {
         if (ilan.durum == 'aktif' && ilan.premium) {
           this.angularFire.database.object(this.baseService.paths.users + "/" + ilan.ilaniVerenKullaniciId)
@@ -83,6 +85,7 @@ export class IlanlarListePage {
       }
       return list;
     }).subscribe(ilanlar => {
+      this.premiumIlanlar = [];
       this.premiumIlanlar = ilanlar;
     })
   }
@@ -104,7 +107,7 @@ export class IlanlarListePage {
   }
 
   logoAc() {
-    this.baseService.presentAlert("DişCep Uygulaması", "Dental sektöründekilerin iletişim kurmalarını sağlar" + "<br>v" + this.appVersion)
+    this.baseService.presentAlert("DişCep Uygulaması", "Dental sektöründekilerin iletişim kurmalarını sağlar <br>v" + this.appVersion)
   }
 
   doInfinite(infiniteScroll) {
@@ -113,7 +116,7 @@ export class IlanlarListePage {
     } else {
       this.burayaKadarBox = true
     }
-    this.ionViewDidLoad()
+    this.ionViewDidEnter();
     setTimeout(() => {
       infiniteScroll.complete();
     }, 500);

@@ -32,7 +32,7 @@
 	</ion-list-header>
 
 	<ion-list-header class="ilan-baslik" light>
-		<span>{{ilan.baslik}}</span>
+		<p>{{ilan.baslik}}</p>
 	</ion-list-header>
 
 	<div *ngIf="ilan.resimler">
@@ -64,6 +64,10 @@
 			<ion-icon name="call"></ion-icon>
 			İLAN SAHİBİNİ ARA
 		</button>
+	</div>
+
+	<div padding *ngIf="chats" class="text-center">
+		<h5 *ngIf="chats.length > 2">Toplam {{chats.length}} kişi bu ilan ile ilgileniyor.</h5>
 	</div>
 
 	<!-- CHATS -->

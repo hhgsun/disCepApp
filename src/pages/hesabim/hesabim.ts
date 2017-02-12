@@ -70,6 +70,7 @@ export class HesabimPage {
             this.angularFire.auth.logout();
             this.navCtrl.setRoot(LoginPage);
             this.platform.exitApp();
+            alertCikis.present();
           }
         }
       ]

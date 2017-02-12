@@ -74,7 +74,10 @@ export class IlanDetayPage {
     })
     // FAVORİ KONTROL
     this.favoriKontrol();
-    this.yeniMesajGorulduKontrol()
+  }
+
+  ionViewDidEnter() {
+    this.yeniMesajGorulduKontrol();
   }
 
   // TAB GİZLEME
@@ -97,7 +100,7 @@ export class IlanDetayPage {
         .then(() => console.log('Aradı'))
         .catch(() => console.log('Arama İşleminde Hata'));
     } else {
-      this.baseService.presentAlert("Kullanıcının Telefon No Kaydı Bulunmamaktadır", "E-Mail Adresi: "+ this.ilan.ilaniVerenKullanici.email);
+      this.baseService.presentAlert("Kullanıcının Telefon No Kaydı Bulunmamaktadır", "E-Mail Adresi: " + this.ilan.ilaniVerenKullanici.email);
     }
   }
 
@@ -146,32 +149,34 @@ export class IlanDetayPage {
         }
       }, {
         text: 'Gönder', handler: data => {
-          var chat = {
-            tarihi: new Date().toISOString(),
-            olusturanId: this.aktifUid,
-            messages: []
+          if (data.mesaj && data.mesaj != "") {
+            var chat = {
+              tarihi: new Date().toISOString(),
+              olusturanId: this.aktifUid,
+              messages: []
+            }
+            this.angularFire.database.list(this.baseService.paths.lists + "/" + this.ilan.$key + "/chats").push(chat)
+              .then(_chat => {
+                var message = {
+                  mesaj: data.mesaj,
+                  tarihi: new Date().toISOString(),
+                  yollayanId: this.aktifUid
+                }
+                this.angularFire.database.list(this.baseService.paths.lists + "/" + this.ilan.$key + "/chats/" + _chat.key + "/messages").push(message)
+                  .then(_message => {
+                    console.log("basarili");
+                    this.bildirimYolla(chat, message);
+                  })
+              }).catch(err => {
+                console.log(err.message);
+              })
           }
-          this.angularFire.database.list(this.baseService.paths.lists + "/" + this.ilan.$key + "/chats").push(chat)
-            .then(_chat => {
-              var message = {
-                mesaj: data.mesaj,
-                tarihi: new Date().toISOString(),
-                yollayanId: this.aktifUid
-              }
-              this.angularFire.database.list(this.baseService.paths.lists + "/" + this.ilan.$key + "/chats/" + _chat.key + "/messages").push(message)
-                .then(_message => {
-                  console.log("basarili");
-                  this.bildirimYolla(chat, message);
-                })
-            }).catch(err => {
-              console.log(err.message);
-            })
         }
       }]
     });
     promptMesaj.present();
   }
-  
+
   mesajYolla(_chat) {
     let promptMesaj = this.alertCtrl.create({
       title: 'Mesaj Yazınız',
@@ -183,50 +188,49 @@ export class IlanDetayPage {
         }
       }, {
         text: 'Gönder', handler: data => {
-          var message = {
-            mesaj: data.mesaj,
-            tarihi: new Date().toISOString(),
-            yollayanId: this.aktifUid
+          if (data.mesaj && data.mesaj != "") {
+            var message = {
+              mesaj: data.mesaj,
+              tarihi: new Date().toISOString(),
+              yollayanId: this.aktifUid
+            }
+            this.angularFire.database.list(this.baseService.paths.lists + "/" + this.ilan.$key + "/chats/" + _chat.$key + "/messages")
+              .push(message).then(data => {
+                console.log("basarili");
+                this.bildirimYolla(_chat, message);
+              }).catch(err => {
+                console.log(err.message);
+              })
           }
-          this.angularFire.database.list(this.baseService.paths.lists + "/" + this.ilan.$key + "/chats/" + _chat.$key + "/messages")
-            .push(message).then(data => {
-              console.log("basarili");
-              this.bildirimYolla(_chat, message);
-            }).catch(err => {
-              console.log(err.message);
-            })
         }
       }]
     });
     promptMesaj.present();
   }
-  
+
   bildirimYolla(chat, message) {
+    var dataObj = {
+      ilanId: this.ilan.$key,
+      mesaj: message.mesaj,
+      mesajSahibiId: this.aktifUid
+    }
     if (chat.olusturanId == message.yollayanId) {
       console.log("İLAN SAHİBİNE BİLDİRİM GİTMELİ:uid: " + this.ilan.ilaniVerenKullaniciId)
       // İLAN SAHİBİNE GİDER
       this.angularFire.database.list(this.baseService.paths.users + "/" + this.ilan.ilaniVerenKullaniciId + "/yeniMesajlar")
-        .push({
-          ilanId: this.ilan.$key,
-          mesaj: message.mesaj,
-          mesajSahibiId: this.aktifUid
-        }).then(() => {
+        .push(dataObj).then(() => {
           this.baseService.postNotification(this.ilan.ilaniVerenKullanici.token, this.ilan.baslik, message.mesaj)
         })
     } else {
       console.log("CHAT SAHİBİNE BİLDİRİM GİTMELİ:uid: " + chat.olusturanId)
       // CHATi AÇANA GİDER
       this.angularFire.database.list(this.baseService.paths.users + "/" + chat.olusturanId + "/yeniMesajlar")
-        .push({
-          ilanId: this.ilan.$key,
-          mesaj: message.mesaj,
-          mesajSahibiId: this.aktifUid
-        }).then(() => {
+        .push(dataObj).then(() => {
           this.baseService.postNotification(chat.olusturanId, this.ilan.baslik, message.mesaj)
         })
     }
   }
-  
+
   // FAVORİ İŞLEMLERİ
   favoriKontrol() {
     this.angularFire.database.list(this.baseService.paths.users + "/" + this.aktifUid + "/favorilerim").map(favs => {
@@ -269,18 +273,19 @@ export class IlanDetayPage {
 
   yeniMesajGorulduKontrol() {
     this.angularFire.database.list(this.baseService.paths.users + "/" + this.aktifUid + "/yeniMesajlar")
+      .take(1) // take(1) bir kereden sonra subscribe ı iptal eder
       .subscribe(messages => {
-        messages.forEach(message => {
+        for (let message of messages) {
           if (this.ilan.$key == message.ilanId) {
             this.angularFire.database.object(this.baseService.paths.users + "/" + this.aktifUid + "/yeniMesajlar/" + message.$key)
               .remove().then(() => {
                 console.log("EKSİLDİ")
-              });
+              })
           }
-        });
-      })
+        }
+      });
   }
-  
+
   goImagesShow(allImages, selectIndex) {
     var obj = {
       allImages: allImages,

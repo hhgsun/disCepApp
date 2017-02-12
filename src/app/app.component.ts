@@ -36,7 +36,6 @@ export class MyApp {
                     this.rootPage = IntroPage;
                 }
             })
-            
             Splashscreen.hide();
         });
     }
