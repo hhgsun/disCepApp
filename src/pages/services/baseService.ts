@@ -54,7 +54,7 @@ export class BaseService {
         public alertCtrl: AlertController,
         private http: Http
     ) {
-        
+
     }
 
     addLog(logKonu: string, obj: any) {
@@ -159,7 +159,10 @@ export class BaseService {
                         "title": baslik,
                         "body": mesaj,
                         "sound": "default",
-                        "icon": "fcm_push_icon"
+                        "icon": "fcm_push_icon",
+                        "text": "5 to 1",
+                        "content_available": 1,
+                        "volume" : "3.21.15"
                     },
                     "to": token,
                     "priority": "high"
